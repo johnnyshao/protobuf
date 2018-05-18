@@ -6,6 +6,7 @@ package vdm;
 
 // Data exchanged between device and server are listed as follows. They can be serialized in Google Protocol Buffers except Firmware Over-The-Air as MCU firmware image is too big to fit into MCU's memory.
 // - Values: Value::Values correspond to definitions in 'VDM Values' document
+// - Functional Test Result:
 // - Values configuration:
 // - Settings:
 // - Commands:
@@ -408,6 +409,75 @@ message Value {
 			oneof gps_vdop_present {
 				uint32 gps_vdop = 9;
 			}
+		}
+	}
+}
+
+message FunctionalTest {
+	oneof imei_present {
+		string imei = 1;
+	}
+	oneof iccid_present {
+		string iccid = 2;
+	}
+	oneof thing_id_present {
+		string thing_id = 3;
+	}
+	oneof ts_present {
+		uint64 ts = 4;
+	}
+	CoreSoftwareVersion core_software_version = 5;
+	oneof result_present {
+		uint32 result = 6;
+	}
+	oneof obd_protocol_present {
+		uint32 obd_protocol = 7;
+	}
+	GpsPosition gps_position = 8;
+	oneof gps_fix_type_present {
+		uint32 gps_fix_type = 9;
+	}
+	
+	message CoreSoftwareVersion {
+		// Software variant
+		oneof variant_present {
+			uint32 variant = 1;
+		}
+		// Major version number
+		oneof major_present {
+			uint32 major = 2;
+		}
+		// Minor version number
+		oneof minor_present {
+			uint32 minor = 3;
+		}
+		// Patch version number
+		oneof patch_present {
+			uint32 patch = 4;
+		}
+		// Build ID
+		oneof build_present {
+			uint32 build = 5;
+		}
+		// Build timestamp
+		oneof timestamp_present {
+			uint32 timestamp = 6;
+		}
+		// Detailed version information
+		oneof details_present {
+			string details = 7;
+		}
+	}
+
+	message GpsPosition {
+		oneof lat_present {
+			int32 lat = 1;
+		}
+		oneof lon_present {
+			int32 lon = 2;
+		}
+		oneof alt_present {
+			int32 alt = 3;
 		}
 	}
 }
